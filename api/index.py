@@ -10,6 +10,7 @@ from starlette.responses import FileResponse
 
 app = FastAPI()
 
+DANMAKU_FACTORY_PATH = os.getenv('DANMAKU_FACTORY_PATH', 'public/convert/DanmakuFactory')
 
 @app.get("/api/test")
 async def index():
@@ -52,6 +53,6 @@ async def convertXmlToAss(files: List[UploadFile] = File(...)):
             output_name = f"{basename}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.ass"
 
             # run the DanmakuFactory command
-            subprocess.run(["./convert/DanmakuFactory", "-o", output_name, "-i", tmp_file_name], check=True)
+            subprocess.run([DANMAKU_FACTORY_PATH, "-o", output_name, "-i", tmp_file_name], check=True)
             converted_files.append(output_name)
     return converted_files
