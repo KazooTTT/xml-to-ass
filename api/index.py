@@ -11,14 +11,14 @@ from starlette.responses import FileResponse
 app = FastAPI()
 
 
-@app.get("/")
+@app.get("/api/test")
 async def index():
     return {"data": "hello world",
             "status": 200,
             "msg": "success"}
 
 
-@app.post("/convert")
+@app.post("/api/convert")
 async def convertToFileList(files: List[UploadFile] = File(...)):
     converted_files = await convertXmlToAss(files)
 
@@ -27,7 +27,7 @@ async def convertToFileList(files: List[UploadFile] = File(...)):
             "msg": "success"}
 
 
-@app.post("/convert/zip")
+@app.post("/api/convert/zip")
 async def convertToZip(files: List[UploadFile] = File(...)):
     converted_files = await convertXmlToAss(files)
     # convert the files into zip
